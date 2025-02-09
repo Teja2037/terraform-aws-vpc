@@ -1,17 +1,18 @@
 resource "aws_vpc_peering_connection" "default" {
- count = var.is_peering_required ? 1 : 0
+  count = var.is_peering_required ? 1 : 0
 
- vpc_id        = aws_vpc.main.id
- peer_vpc_id   = local.default_vpc_id  #acceptor
- auto_accept   = true
+  vpc_id        = aws_vpc.main.id
+  peer_vpc_id   = local.default_vpc_id  #acceptor
+  auto_accept   = true
 
- tags = merge(
+  tags = merge(
     var.common_tags,
     var.aws_vpc_peering_tags,
     {
         Name = "${local.resource_name}-default"
     }
- )
+  )
+
 }
 
 resource "aws_route" "public_peering" {
